@@ -1,0 +1,56 @@
+<div class="container">
+      <div class="header clearfix">
+        <nav>
+          <ul class="nav nav-pills pull-right">
+            <li role="presentation" class="active"><a href="/">Dashboard</a></li>
+            <li class="dropdown">
+              <% if session[:user_id] != nil %><% @user = User.find_by(id: session[:user_id]) %>
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><%="#{@user.email}"%><span class="caret"></span></a>
+                <ul class="dropdown-menu" role="menu">
+              <%else%>
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Not Logged In<span class="caret"></span></a>
+                <ul class="dropdown-menu" role="menu">
+                <li><a href="/login">Login</a></li>
+                <li><a href="/register">Register</a></li>
+              <%end%>
+                <li class="divider"></li>
+                <li><a href="/logout">Logout</a></li>
+              </ul>
+            </li>
+          </ul>
+        </nav>
+        
+        <h3 class="text-muted">Flicker Jr.</h3>
+      </div>
+
+      <div class="jumbotron">
+        <h1>Album : <%=@album.name.capitalize%></h1>
+        <div class="imagegallery">
+        <% if @album.photos != nil %>
+        <% @album.photos.each do |photo| %>
+        <a href = "<%= photo.filename %>"><img src="<%= photo.filename.thumb %>" alt="..."></a>
+        <%end%>
+        <%else%>
+        <%end%>
+
+        </div>
+
+        <%if @album.photos == nil%>
+          <p class="lead">There are no photos in this album. Please upload photos</p>
+        <%else%>
+          <p class="lead">Add photo(s) to this album?</p>
+        <%end%>
+
+        <form action="/album/<%=session[:album_id]%>/upload" enctype="multipart/form-data" method="post">
+          <input type="file" name="filename" class="filename">
+          <button type="submit">Submit</button>
+        </form>
+
+    
+      </div>
+
+      <footer class="footer">
+        <p>&copy; Company 2014</p>
+      </footer>
+
+    </div> <!-- /container -->
