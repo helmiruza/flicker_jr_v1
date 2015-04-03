@@ -23,9 +23,9 @@
         <h3 class="text-muted">Flicker Jr.</h3>
       </div>
 
-      <div class="jumbotron">
-        
-        <%if session[:user_id] == nil%>
+          
+      <%if session[:user_id] == nil%>
+        <div class="jumbotron">
         	<h1>Flicker Jr.</h1>
 	        <p class="lead">Login to upload your photos. No account? Signup!</p>
 
@@ -36,7 +36,38 @@
           	<% end %>
 
 	        <p><a class="btn btn-lg btn-primary" href="/login" role="button">Login</a> <a class="btn btn-lg btn-success" href="/register" role="button">Register</a></p>
-	      <%else%>
+          
+        </div>
+
+        <!-- display albums w/o login -->
+        <div class="jumbotron">
+          <h3>Albums by others :</h3>
+            <div class="imagegallery">
+              <% if @allalbums != nil %>
+                <% @allalbums.each do |album| %>
+                  <a href = "<%= album.filename %>"><img src="<%= album.filename.thumb %>" alt="..."></a>
+                <%end%>
+              <%else%>
+              <%end%>
+	         </div>
+        </div>
+
+        <!-- display pics w/o login -->
+        <div class="jumbotron">
+          <h3>Photos by others :</h3>
+            <div class="imagegallery">
+              <% if @allphotos != nil %>
+                <% @allphotos.each do |photo| %>
+                  <a href = "<%= photo.filename %>"><img src="<%= photo.filename.thumb %>" alt="..."></a>
+                <%end%>
+              <%else%>
+              <%end%>
+           </div>
+        </div>
+
+      <%else%>
+
+        <div class="jumbotron">
 	      	<h1>Dashboard</h1>
 
 	      	<%if @user.albums == nil%>
@@ -51,6 +82,7 @@
 			        <%end%>
 			       <%else%>
 			      <%end%>
+
 	        <%end%>
 
 					<p></p>
@@ -61,9 +93,10 @@
 			  		<p><input type="file" name="filename" class="filename"> <button type="submit">Submit</button>
 					</form>
 					</p>
+        </div>
 
-				<%end%>
-      </div>
+			<%end%>
+      
 
       <footer class="footer">
         <p>&copy; Company 2014</p>

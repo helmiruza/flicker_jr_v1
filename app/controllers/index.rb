@@ -3,6 +3,9 @@ enable :sessions
 get '/' do
   # Look in app/views/index.erb
   @user = User.find_by(id: session[:user_id])
+  @allphotos = Photo.all
+  @allalbums = Album.all
+  
   erb :index
 end
 
